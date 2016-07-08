@@ -3,11 +3,11 @@ using System.Collections;
 
 public class CAM : MonoBehaviour {
 	
-	public GameObject player;
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find ("ThirdPersonController");
+		player = GameObject.Find ("Randalf");
 	}
 	
 	// Update is called once per frame

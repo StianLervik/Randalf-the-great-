@@ -8,22 +8,25 @@ public class PlayerMovement : MonoBehaviour {
 	public float speed;
 	public float jumpstrength = 4000.0f;
 	public int jumpHeight = 8;
+	public bool grounded = false;
 	public bool front = true;
 	public float frontBackDist;
 	public float transSpeed;
 	public int rotationSpeed = 100;
+	public bool climb = false;
 
 	private bool isFalling = false;
 	private Vector3 targetPos;
 	private float backPos;
 	private float frontPos;
-	public bool climb = false;
+	private Animator plAnim;
 
 	void Start()
 	{
 		body = GetComponent<Rigidbody> ();
 		backPos = frontBackDist + transform.position.z;
 		frontPos = transform.position.z;
+		plAnim = GetComponent<Animator> ();
 	}
 
 	void Update()
@@ -48,9 +51,9 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		transform.position = Vector3.Lerp (transform.position, targetPos, transSpeed*Time.deltaTime);
-		if (Input.GetKeyDown ("space")) 
+		if(Input.GetAxis("Horizontal") == 0)
 		{
-			body.velocity.y = 
+			plAnim.Play("Idle");
 		}
 	}
 		
@@ -62,10 +65,11 @@ public class PlayerMovement : MonoBehaviour {
 		Vector3 movement = new Vector3 (moveHorizontal * speed, body.velocity.y, body.velocity.z);
 		body.velocity = movement;
 
-		/*if (Input.GetKeyDown ("space") && jumpable){
+		if (Input.GetKeyDown ("space") && grounded){
 			body.AddForce(Vector3.up * jumpstrength);
 		}
-*/
 	}
-
+	void OnCollitionStay(Collision col){
+		print ("Hei");
+	}
 }
